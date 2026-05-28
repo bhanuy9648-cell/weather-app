@@ -5,7 +5,8 @@ export default defineConfig({
   base: './',
   plugins: [react()],
   server: {
-    port: 3000,
-    open: true
+    port: Number(process.env.PORT) || 3000,
+    strictPort: true,
+    open: !process.env.PORT && !process.env.VERCEL
   }
 })
