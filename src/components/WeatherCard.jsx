@@ -1,11 +1,21 @@
 import PropTypes from 'prop-types'
+import { useLocation, useNavigate } from 'react-router-dom'
 import { formatTemperature, getTemperatureUnit, getWindSpeedUnit } from '../utils/temperatureConverter'
 import { formatTime } from '../utils/dateFormatter'
 import '../styles/Weather.css'
 
 const WeatherCard = ({ weather, units = 'metric' }) => {
+  const location = useLocation()
+  const navigate = useNavigate()
+  
   if (!weather) {
     return null
+  }
+
+  const isDashboard = location.pathname === '/' || !location.pathname.includes('/weather')
+
+  const handleViewDetails = () => {
+    navigate(`/weather/${weather.name}`)
   }
 
   const { main, weather: weatherData, wind, clouds, sys, visibility, isDemoMode } = weather
@@ -32,6 +42,15 @@ const WeatherCard = ({ weather, units = 'metric' }) => {
           <div className="weather-condition-badge">
             <span className="condition-text">{mainWeather?.description}</span>
           </div>
+          {isDashboard && (
+            <button className="view-details-btn" onClick={handleViewDetails}>
+              <span>Detailed Forecast</span>
+              <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2.5" strokeLinecap="round" strokeLinejoin="round">
+                <line x1="5" y1="12" x2="19" y2="12" />
+                <polyline points="12,5 19,12 12,19" />
+              </svg>
+            </button>
+          )}
         </div>
 
         <div className="hero-temp-section">

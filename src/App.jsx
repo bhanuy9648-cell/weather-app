@@ -1,13 +1,7 @@
-import { RouterProvider } from 'react-router-dom'
-import { WeatherProvider } from './context/WeatherContext'
-import { router } from './routes'
+import Home from './pages/Home'
 
 function App() {
-  return (
-    <WeatherProvider>
-      <RouterProvider router={router} />
-    </WeatherProvider>
-  )
+  return <Home />
 }
 
-export default App
+export default App;

@@ -24,8 +24,36 @@ const WeatherDetails = () => {
     navigate('/')
   }
 
+  const getWeatherThemeClass = () => {
+    if (!weather || !weather.weather || !weather.weather[0]) {
+      return 'theme-default'
+    }
+    const condition = weather.weather[0].main.toLowerCase()
+    if (condition.includes('clear')) return 'theme-clear'
+    if (condition.includes('cloud')) return 'theme-clouds'
+    if (condition.includes('rain') || condition.includes('drizzle')) return 'theme-rain'
+    if (condition.includes('thunderstorm')) return 'theme-thunderstorm'
+    if (condition.includes('snow')) return 'theme-snow'
+    if (
+      condition.includes('mist') ||
+      condition.includes('fog') ||
+      condition.includes('haze') ||
+      condition.includes('smoke') ||
+      condition.includes('dust') ||
+      condition.includes('sand') ||
+      condition.includes('ash') ||
+      condition.includes('squall') ||
+      condition.includes('tornado')
+    ) {
+      return 'theme-mist'
+    }
+    return 'theme-default'
+  }
+
+  const themeClass = getWeatherThemeClass()
+
   return (
-    <div className="weather-details-page">
+    <div className={`weather-details-page ${themeClass}`}>
       <div className="dashboard-container" style={{ gridTemplateColumns: '1fr', maxWidth: '900px' }}>
         
         <header className="details-header" style={{ display: 'flex', alignItems: 'center', gap: '20px', marginBottom: '10px' }}>
